@@ -57,7 +57,7 @@ class RoomsPage extends CRUDPage
         //získat data
         $employees = Staff::getAll(['name' => 'ASC']);
         //prezentovat data
-        $html .= MustacheProvider::get()->render('roomList',['rooms' => $employees]);
+        $html .= MustacheProvider::get()->render('employeeList',['rooms' => $employees]);
 
         return $html;
     }
