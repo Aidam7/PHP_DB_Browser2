@@ -10,18 +10,18 @@ class RoomDetailPage extends BasePage
     {
         parent::prepare();
         //získat data z GET
-        $roomId = filter_input(INPUT_GET, 'roomId', FILTER_VALIDATE_INT);
-        if (!$roomId)
+        $employeeId = filter_input(INPUT_GET, 'employeeId', FILTER_VALIDATE_INT);
+        if (!$employeeId)
             throw new BadRequestException();
 
         //najít místnost v databázi
-        $this->room = Room::findByID($roomId);
+        $this->room = Room::findByID($employeeId);
         if (!$this->room)
             throw new NotFoundException();
 
 
-        $stmt = PDOProvider::get()->prepare("SELECT `surname`, `name`, `employee_id` FROM `employee` WHERE `room`= :roomId ORDER BY `surname`, `name`");
-        $stmt->execute(['roomId' => $roomId]);
+        $stmt = PDOProvider::get()->prepare("SELECT `surname`, `name`, `employee_id` FROM `employee` WHERE `employee_id`= :employeeId ORDER BY `surname`, `name`");
+        $stmt->execute(['employeeId' => $employeeId]);
         $this->employees = $stmt->fetchAll();
 
         $this->title = "Detail místnosti {$this->room->no}";
