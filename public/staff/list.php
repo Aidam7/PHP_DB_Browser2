@@ -7,7 +7,7 @@ class RoomsPage extends CRUDPage
 
     public function __construct()
     {
-        $this->title = "Výpis místností";
+        $this->title = "Výpis zaměstnanců";
     }
 
     protected function prepare(): void
@@ -55,9 +55,9 @@ class RoomsPage extends CRUDPage
         }
 
         //získat data
-        $rooms = Room::getAll(['name' => 'ASC']);
+        $employees = Staff::getAll(['name' => 'ASC']);
         //prezentovat data
-        $html .= MustacheProvider::get()->render('roomList',['rooms' => $rooms]);
+        $html .= MustacheProvider::get()->render('roomList',['rooms' => $employees]);
 
         return $html;
     }

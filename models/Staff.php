@@ -16,25 +16,23 @@ class Staff
     public ?string $password;
     public ?bool $admin;
 
-    /**
-     * @param int|null $room_id
-     * @param string|null $name
-     * @param string|null $no
-     * @param string|null $phone
-     */
-    public function __construct(?int $room_id = null, ?string $name = null, ?string $no = null, ?string $phone = null)
-    {
-        $this->employee_id = $room_id;
+    public function  __construct(?int $employee_id = null, ?string $name = null, ?string $surname = null, ?string $job = null, ?int $wage =  null, ?int $room = null, ?string $login = null, ?string $password = null, ?bool $admin = null){
+        $this->employee_id = $employee_id;
         $this->name = $name;
-        $this->no = $no;
-        $this->phone = $phone;
+        $this->surname = $surname;
+        $this->job = $job;
+        $this->wage = $wage;
+        $this ->room = $room;
+        $this->login = $login;
+        $this->password = $password;
+        $this->admin = $admin;
     }
 
     public static function findByID(int $id) : ?self
     {
         $pdo = PDOProvider::get();
-        $stmt = $pdo->prepare("SELECT * FROM `".self::DB_TABLE."` WHERE `room_id`= :roomId");
-        $stmt->execute(['roomId' => $id]);
+        $stmt = $pdo->prepare("SELECT * FROM `".self::DB_TABLE."` WHERE `employee_id`= :employeeId");
+        $stmt->execute(['employee_id' => $id]);
 
         if ($stmt->rowCount() < 1)
             return null;
@@ -63,20 +61,20 @@ class Staff
         $stmt = $pdo->prepare("SELECT * FROM `".self::DB_TABLE."`" . $sortSQL);
         $stmt->execute([]);
 
-        $rooms = [];
-        while ($roomData = $stmt->fetch())
+        $staff = [];
+        while ($staffData = $stmt->fetch())
         {
-            $room = new Room();
-            $room->hydrate($roomData);
-            $rooms[] = $room;
+            $employee = new Staff();
+            $employee->hydrate($staffData);
+            $staff[] = $employee;
         }
 
-        return $rooms;
+        return $staff;
     }
 
     private function hydrate(array|object $data)
     {
-        $fields = ['room_id', 'name', 'no', 'phone'];
+        $fields = ['employee_id', 'name', 'surname', 'job', 'wage', 'room', 'login', 'password', 'admin'];
         if (is_array($data))
         {
             foreach ($fields as $field)
@@ -97,7 +95,7 @@ class Staff
 
     public function insert() : bool
     {
-        $query = "INSERT INTO ".self::DB_TABLE." (`name`, `no`, `phone`) VALUES (:name, :no, :phone)";
+        $query = "INSERT INTO ".self::DB_TABLE." (`name`, `surname`, `phone`) VALUES (:name, :surname, :phone)";
         $stmt = PDOProvider::get()->prepare($query);
         $result = $stmt->execute(['name'=>$this->name, 'no'=>$this->no, 'phone'=>$this->phone]);
         if (!$result)
