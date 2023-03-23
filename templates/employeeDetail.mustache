@@ -1,4 +1,4 @@
-{{#room}}
+{{#employee}}
 <h1>Detail místnosti {{no}}</h1>
 <dl>
     <dt>Název</dt>
@@ -12,11 +12,11 @@
 
 
     <dt>Lidé</dt>
-    {{#employees}}
+    {{#employee}}
         <dd>
 <!--            <a href='employee.php?employee_id={{employee_id}}'>{{surname}} {{name}}</a>-->
             <a href='detail.php?employeeId={{employee_id}}'>{{surname}} {{name}}</a>
         </dd>
-    {{/employees}}
+    {{/employee}}
 </dl>
-{{/room}}
+{{/employee}}

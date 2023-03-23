@@ -33,7 +33,7 @@ class EmployeeDetailPage extends BasePage
         //prezentovat data
         return MustacheProvider::get()->render(
             'employeeDetail',
-            ['phone' => $this->employees->phone, 'employees' => $this->employees]
+            ['phone' => $this->employees->phone, 'employee' => $this->employees]
         );
     }
 
