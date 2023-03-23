@@ -55,6 +55,7 @@ class RoomUpdatePage extends CRUDPage
         return MustacheProvider::get()->render(
             'roomForm',
             [
+                'formHeader' => 'Upravit místnost',
                 'room' => $this->room,
                 'errors' => $this->errors
             ]

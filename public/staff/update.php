@@ -55,6 +55,7 @@ class StaffUpdatePage extends CRUDPage
         return MustacheProvider::get()->render(
             'employeeForm',
             [
+                'formHeader' => 'Upravit zaměstnance',
                 'employee' => $this->employee,
                 'errors' => $this->errors
             ]

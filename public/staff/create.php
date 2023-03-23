@@ -6,7 +6,7 @@ class EmployeeCreatePage extends CRUDPage
     private ?Staff $employee;
     private ?array $errors = [];
     private int $state;
-    
+
     protected function prepare(): void
     {
         parent::prepare();
@@ -48,6 +48,7 @@ class EmployeeCreatePage extends CRUDPage
         return MustacheProvider::get()->render(
             'employeeForm',
             [
+                'formHeader' => 'Založit zaměstnance',
                 'employee' => $this->employee,
                 'errors' => $this->errors
             ]

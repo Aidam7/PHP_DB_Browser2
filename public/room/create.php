@@ -48,6 +48,7 @@ class RoomCreatePage extends CRUDPage
         return MustacheProvider::get()->render(
             'roomForm',
             [
+                'formHeader' => 'Založit místnost',
                 'room' => $this->room,
                 'errors' => $this->errors
             ]
