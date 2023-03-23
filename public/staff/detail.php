@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . "/../../bootstrap/bootstrap.php";
 
-class RoomDetailPage extends BasePage
+class EmployeeDetailPage extends BasePage
 {
-    private $room;
+    private $employee;
     private $employees;
 
     protected function prepare(): void
@@ -15,16 +15,16 @@ class RoomDetailPage extends BasePage
             throw new BadRequestException();
 
         //najít místnost v databázi
-        $this->room = Room::findByID($employeeId);
-        if (!$this->room)
+        $this->employee = Staff::findByID($employeeId);
+        if (!$this->employee)
             throw new NotFoundException();
 
 
-        $stmt = PDOProvider::get()->prepare("SELECT `surname`, `name`, `employee_id` FROM `employee` WHERE `employee_id`= :employeeId ORDER BY `surname`, `name`");
+        $stmt = PDOProvider::get()->prepare("SELECT e.`surname`, e.`name`, e.`employee_id`, e.`room`, e.`job`, r.`phone` FROM `employee` e, `room` r WHERE `employee_id`=:employeeId AND r.`room_id` = e.`room` ORDER BY `surname`, `name`");
         $stmt->execute(['employeeId' => $employeeId]);
         $this->employees = $stmt->fetchAll();
 
-        $this->title = "Detail místnosti {$this->room->no}";
+        $this->title = "Detail zaměstnance {$this->employee->employee_id}";
 
     }
 
@@ -32,14 +32,14 @@ class RoomDetailPage extends BasePage
     {
         //prezentovat data
         return MustacheProvider::get()->render(
-            'roomDetail',
-            ['room' => $this->room, 'employees' => $this->employees]
+            'employeeDetail',
+            ['phone' => $this->employees->phone, 'employees' => $this->employees]
         );
     }
 
 }
 
-$page = new RoomDetailPage();
+$page = new EmployeeDetailPage();
 $page->render();
 
 ?>

@@ -1,17 +1,19 @@
-AAAAAAAAAAA<table class='table table-striped'>
+<table class='table table-striped'>
     <tr>
         <th>Name</th>
-        <th>No.</th>
+        <th>Position</th>
+        <th>Room</th>
         <th>Phone</th>
         <th>Actions</th>
     </tr>
 
-    {{#rooms}}
+    {{#employees}}
     <tr>
         <td>
-            <a href='detail.php?employeeId={{employee_id}}'>{{name}}</a>
+            <a href='detail.php?employeeId={{employee_id}}'>{{surname}} {{name}}</a>
         </td>
-        <td>{{no}}</td>
+        <td>{{job}}</td>
+        <td></td>
         <td>{{#phone}}{{phone}}{{/phone}}{{^phone}}&mdash;{{/phone}}</td>
         <td>
             <form action="update.php" method="get" style="display: inline-block">
@@ -24,10 +26,10 @@ AAAAAAAAAAA<table class='table table-striped'>
             </form>
         </td>
     </tr>
-    {{/rooms}}
-    {{^rooms}}
+    {{/employees}}
+    {{^employees}}
         <tr><td colspan="3">Databáze je prázdná</td></tr>
-    {{/rooms}}
+    {{/employees}}
 
 </table>
 

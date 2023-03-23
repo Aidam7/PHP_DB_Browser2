@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../../bootstrap/bootstrap.php";
 
-class RoomsPage extends CRUDPage
+class EmployeesPage extends CRUDPage
 {
     private $alert = [];
 
@@ -57,14 +57,14 @@ class RoomsPage extends CRUDPage
         //získat data
         $employees = Staff::getAll(['name' => 'ASC']);
         //prezentovat data
-        $html .= MustacheProvider::get()->render('employeeList',['rooms' => $employees]);
+        $html .= MustacheProvider::get()->render('employeeList',['employees' => $employees]);
 
         return $html;
     }
 
 }
 
-$page = new RoomsPage();
+$page = new EmployeesPage();
 $page->render();
 
 ?>

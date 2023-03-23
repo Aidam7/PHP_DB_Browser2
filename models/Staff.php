@@ -31,7 +31,8 @@ class Staff
     public static function findByID(int $id) : ?self
     {
         $pdo = PDOProvider::get();
-        $stmt = $pdo->prepare("SELECT * FROM `".self::DB_TABLE."` WHERE `employee_id`= :employeeId");
+//        $stmt = $pdo->prepare("SELECT * FROM `".self::DB_TABLE."` WHERE `employee_id`= :employeeId");
+        $stmt = $pdo->prepare("SELECT e.`surname`, e.`name`, e.`employee_id`, e.`room`, e.`job`, r.`phone` FROM `employee` e, `room` r WHERE `employee_id`=:employeeId AND r.`room_id` = e.`room` ORDER BY `surname`, `name`");
         $stmt->execute(['employee_id' => $id]);
 
         if ($stmt->rowCount() < 1)
