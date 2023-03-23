@@ -141,24 +141,24 @@ class Staff
 
     public static function readPost() : self
     {
-        $room = new Room();
-        $room->room_id = filter_input(INPUT_POST, 'room_id', FILTER_VALIDATE_INT);
+        $employee = new Staff();
+        $employee->room_id = filter_input(INPUT_POST, 'employee_id', FILTER_VALIDATE_INT);
 
-        $room->name = filter_input(INPUT_POST, 'name');
-        if ($room->name)
-            $room->name = trim($room->name);
+        $employee->name = filter_input(INPUT_POST, 'name');
+        if ($employee->name)
+            $employee->name = trim($employee->name);
 
-        $room->no = filter_input(INPUT_POST, 'no');
-        if ($room->no)
-            $room->no = trim($room->no);
+        $employee->no = filter_input(INPUT_POST, 'no');
+        if ($employee->no)
+            $employee->no = trim($employee->no);
 
-        $room->phone = filter_input(INPUT_POST, 'phone');
-        if ($room->phone)
-            $room->phone = trim($room->phone);
-        if (!$room->phone)
-            $room->null;
+        $employee->phone = filter_input(INPUT_POST, 'phone');
+        if ($employee->phone)
+            $employee->phone = trim($employee->phone);
+        if (!$employee->phone)
+            $employee->null;
 
-        return $room;
+        return $employee;
     }
 }
 
