@@ -1,22 +1,17 @@
 {{#employee}}
-<h1>Detail místnosti {{no}}</h1>
+<h1>Detail zaměstnance č. {{employee_id}}</h1>
 <dl>
-    <dt>Název</dt>
-    <dd>{{name}}</dd>
-
-    <dt>Číslo</dt>
-    <dd>{{no}}</dd>
-
+    <dt>Jméno</dt>
+    <dd>{{surname}} {{name}}</dd>
+    <dt>Pozice</dt>
+    <dd>{{job}}</dd>
+    <dt>Plat</dt>
+    <dd>{{wage}}</dd>
     <dt>Telefon</dt>
     <dd>{{#phone}}{{phone}}{{/phone}}{{^phone}}&mdash;{{/phone}}</dd>
-
-
-    <dt>Lidé</dt>
-    {{#employee}}
-        <dd>
-<!--            <a href='employee.php?employee_id={{employee_id}}'>{{surname}} {{name}}</a>-->
-            <a href='detail.php?employeeId={{employee_id}}'>{{surname}} {{name}}</a>
-        </dd>
-    {{/employee}}
+    <dt>Místnost</dt>
+    <dd>{{roomName}}</dd>
+    <dt>Majitel klíčů pro místnosti:</dt>
+    <dd></dd>
 </dl>
 {{/employee}}

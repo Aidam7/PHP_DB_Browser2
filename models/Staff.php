@@ -121,11 +121,11 @@ class Staff
         return self::deleteByID($this->employee_id);
     }
 
-    public static function deleteByID(int $roomId) : bool
+    public static function deleteByID(int $employeeId) : bool
     {
-        $query = "DELETE FROM `".self::DB_TABLE."` WHERE `room_id` = :roomId";
+        $query = "DELETE FROM `".self::DB_TABLE."` WHERE `employee_id` = :Id";
         $stmt = PDOProvider::get()->prepare($query);
-        return $stmt->execute(['roomId'=>$roomId]);
+        return $stmt->execute(['Id'=>$employeeId]);
     }
 
     public function validate(&$errors = []) : bool

@@ -20,7 +20,7 @@ class EmployeeDetailPage extends BasePage
             throw new NotFoundException();
 
 
-        $stmt = PDOProvider::get()->prepare("SELECT e.`surname`, e.`name`, e.`employee_id`, e.`room`, e.`job`, r.`phone` FROM `employee` e, `room` r WHERE `employee_id`=:employeeId AND r.`room_id` = e.`room` ORDER BY `surname`, `name`");
+        $stmt = PDOProvider::get()->prepare("SELECT e.`surname`, e.`name`, e.`employee_id`, e.`room`, e.`job`,  e.`wage`, r.`phone`, r.`name` roomName FROM `employee` e, `room` r WHERE `employee_id`=:employeeId AND r.`room_id` = e.`room` ORDER BY `surname`, `name`");
         $stmt->execute(['employeeId' => $employeeId]);
         $this->employees = $stmt->fetchAll();
 
@@ -33,7 +33,7 @@ class EmployeeDetailPage extends BasePage
         //prezentovat data
         return MustacheProvider::get()->render(
             'employeeDetail',
-            ['phone' => $this->employees->phone, 'employee' => $this->employees]
+            ['employee' => $this->employees]
         );
     }
 
