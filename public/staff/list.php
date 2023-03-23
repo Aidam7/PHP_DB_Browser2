@@ -55,7 +55,10 @@ class EmployeesPage extends CRUDPage
         }
 
         //získat data
-        $employees = Staff::getAll(['name' => 'ASC']);
+//        $employees = Staff::getAll(['name' => 'ASC']);
+        $stmt = PDOProvider::get()->prepare("SELECT e.`surname`, e.`name`, e.`employee_id`, e.`room`, e.`job`, r.`phone`, r.`name` roomName FROM `employee` e, `room` r WHERE e.`room` = r.`room_id` ORDER BY `surname`, `name`");
+        $stmt->execute();
+        $employees = $stmt->fetchAll();
         //prezentovat data
         $html .= MustacheProvider::get()->render('employeeList',['employees' => $employees]);
 
