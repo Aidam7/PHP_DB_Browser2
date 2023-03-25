@@ -28,11 +28,11 @@ class StaffUpdatePage extends CRUDPage
                 throw new NotFoundException();
             $this->room = Room::findByID($this->employee->room);
             $this->rooms = Room::getAll();
-            var_dump($this->rooms);
+
             if (($index = array_search($this->room, $this->rooms)) !== false) {
                 unset($this->rooms[$index]);
             }
-            var_dump($this->rooms);
+
         }
 
         //když poslal data
