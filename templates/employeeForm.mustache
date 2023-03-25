@@ -11,14 +11,14 @@
         {{#errors.surname}}<div class="d-block invalid-feedback">{{errors.surname}}</div>{{/errors.surname}}
     </div>
     <div class="form-group">
-        <label for="phone">Telefon</label>
-        <input type="text" class="form-control" id="phone" name="phone" value="{{employee.phone}}">
-        {{#errors.phone}}<div class="d-block invalid-feedback">{{errors.phone}}</div>{{/errors.phone}}
+        <label for="job">Pozice</label>
+        <input type="text" class="form-control" id="job" name="job" value="{{employee.job}}">
+        {{#errors.job}}<div class="d-block invalid-feedback">{{errors.job}}</div>{{/errors.job}}
     </div>
     <div class="form-group">
-        <label for="no">Číslo</label>
-        <input type="text" class="form-control" id="no" name="no" value="{{employee.no}}" required>
-        {{#errors.no}}<div class="d-block invalid-feedback">{{errors.no}}</div>{{/errors.no}}
+        <label for="wage">Plat</label>
+        <input type="text" class="form-control" id="wage" name="wage" value="{{employee.wage}}" required>
+        {{#errors.wage}}<div class="d-block invalid-feedback">{{errors.wage}}</div>{{/errors.wage}}
     </div>
     {{#employee.employee_id}}<input type="hidden" name="employee_id" value="{{employee.employee_id}}">{{/employee.employee_id}}
 
