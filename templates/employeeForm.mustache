@@ -20,6 +20,16 @@
         <input type="text" class="form-control" id="wage" name="wage" value="{{employee.wage}}" required>
         {{#errors.wage}}<div class="d-block invalid-feedback">{{errors.wage}}</div>{{/errors.wage}}
     </div>
+
+    <div class="form-group">
+        <label for="room">Místnost</label><br>
+        <select class="custom-select" id="room">
+            <option selected>{{employee.roomName}}</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+    </div>
     {{#employee.employee_id}}<input type="hidden" name="employee_id" value="{{employee.employee_id}}">{{/employee.employee_id}}
 
     <button type="submit" class="btn btn-primary mt-3">Odeslat</button>
