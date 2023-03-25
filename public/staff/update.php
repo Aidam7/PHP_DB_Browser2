@@ -26,7 +26,13 @@ class StaffUpdatePage extends CRUDPage
             $this->employee = Staff::findByID($employeeId);
             if (!$this->employee)
                 throw new NotFoundException();
-
+            $this->room = Room::findByID($this->employee->room);
+            $this->rooms = Room::getAll();
+            var_dump($this->rooms);
+            if (($index = array_search($this->room, $this->rooms)) !== false) {
+                unset($this->rooms[$index]);
+            }
+            var_dump($this->rooms);
         }
 
         //když poslal data
@@ -58,6 +64,8 @@ class StaffUpdatePage extends CRUDPage
             'employeeForm',
             [
                 'formHeader' => 'Upravit zaměstnance',
+                'homeRoom' => $this->room,
+                'rooms' => $this->rooms,
                 'employee' => $this->employee,
                 'errors' => $this->errors
             ]

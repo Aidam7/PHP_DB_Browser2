@@ -40,7 +40,6 @@ class Staff
 
         $employee = new self();
         $employee->hydrate($stmt->fetch());
-        var_dump($employee);
         return $employee;
     }
 
