@@ -1,6 +1,7 @@
 <table class='table table-striped'>
     <tr>
         <th>Name</th>
+        <th>Identificator</th>
         <th>Position</th>
         <th>Room</th>
         <th>Phone</th>
@@ -12,6 +13,7 @@
         <td>
             <a href='detail.php?employeeId={{employee_id}}'>{{surname}} {{name}}</a>
         </td>
+        <td>{{employee_id}}</td>
         <td>{{job}}</td>
         <td>{{roomName}}</td>
         <td>{{#phone}}{{phone}}{{/phone}}{{^phone}}&mdash;{{/phone}}</td>
@@ -22,7 +24,7 @@
             </form>
             <form action="delete.php" method="post" style="display: inline-block">
                 <input type="hidden" name="employeeId" value="{{employee_id}}">
-                <input type="submit" value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat místnost?\nAkce je nevratná!');">
+                <input type="submit" value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat zaměstnance?\nAkce je nevratná!');">
             </form>
         </td>
     </tr>
