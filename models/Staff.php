@@ -32,7 +32,7 @@ class Staff
     {
         $pdo = PDOProvider::get();
        $stmt = $pdo->prepare("SELECT * FROM `".self::DB_TABLE."` WHERE `employee_id`= :employeeId");
-        /* $stmt = $pdo->prepare("SELECT e.`surname`, e.`name`, e.`employee_id`, e.`room`, e.`job`, r.`phone` FROM `employee` e, `room` r WHERE `employee_id`=:employeeId AND r.`room_id` = e.`room` ORDER BY `surname`, `name`");*/
+        //$stmt = $pdo->prepare("SELECT e.`surname`, e.`name`, e.`employee_id`, e.`room`, e.`job`, r.`phone`, r.`name` FROM `employee` e, `room` r WHERE `employee_id`=:employeeId AND r.`room_id` = e.`room` ORDER BY `surname`, `name`");
         $stmt->execute(['employeeId' => $id]);
 
         if ($stmt->rowCount() < 1)
@@ -40,6 +40,7 @@ class Staff
 
         $employee = new self();
         $employee->hydrate($stmt->fetch());
+        var_dump($employee);
         return $employee;
     }
 
