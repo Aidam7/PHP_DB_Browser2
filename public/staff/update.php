@@ -4,6 +4,8 @@ require_once __DIR__ . "/../../bootstrap/bootstrap.php";
 class StaffUpdatePage extends CRUDPage
 {
     private ?Staff $employee;
+    private ?Room $room;
+    private array $rooms = [];
     private ?array $errors = [];
     private int $state;
 
@@ -16,12 +18,12 @@ class StaffUpdatePage extends CRUDPage
         //když chce formulář
         if ($this->state === self::STATE_FORM_REQUESTED)
         {
-            $roomId = filter_input(INPUT_GET, 'employeeId', FILTER_VALIDATE_INT);
-            if (!$roomId)
+            $employeeId = filter_input(INPUT_GET, 'employeeId', FILTER_VALIDATE_INT);
+            if (!$employeeId)
                 throw new BadRequestException();
 
             //jdi dál
-            $this->employee = Staff::findByID($roomId);
+            $this->employee = Staff::findByID($employeeId);
             if (!$this->employee)
                 throw new NotFoundException();
 
