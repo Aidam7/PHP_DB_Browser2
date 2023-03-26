@@ -55,7 +55,7 @@ class StaffUpdatePage extends CRUDPage
     protected function pageBody()
     {
 
-        $stmt = PDOProvider::get()->prepare('SELECT name, room_id FROM room;');
+        $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM room ORDER BY room_id;");
         $stmt->execute();
         $rooms = $stmt->fetchAll();
 
@@ -66,7 +66,7 @@ class StaffUpdatePage extends CRUDPage
                 array_push($mustacheArray, $rooms[$i]);
             }
         }
-        
+
         return MustacheProvider::get()->render(
             'employeeForm',
             [
