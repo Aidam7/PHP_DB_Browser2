@@ -96,9 +96,9 @@ class Staff
 
     public function insert() : bool
     {
-        $query = "INSERT INTO ".self::DB_TABLE." (`name`, `surname`, `phone`) VALUES (:name, :surname, :phone)";
+        $query = "INSERT INTO ".self::DB_TABLE." (`name`, `surname`, `room`, `wage`, `job`) VALUES (:name, :surname, :room, :wage, :job)";
         $stmt = PDOProvider::get()->prepare($query);
-        $result = $stmt->execute(['name'=>$this->name, 'no'=>$this->no, 'phone'=>$this->phone]);
+        $result = $stmt->execute(['name'=>$this->name, 'surname'=>$this->surname, 'room'=>$this->room, 'wage'=>$this->wage, 'job'=>$this->job]);
         if (!$result)
             return false;
 
@@ -111,7 +111,7 @@ class Staff
         if (!isset($this->employee_id) || !$this->employee_id)
             throw new Exception("Cannot update model without ID");
 
-        $query = "UPDATE ".self::DB_TABLE." SET `name` = :name, `surname` = :surname, `room` = :room, `job` =:job, `wage`=:wage WHERE `employee_id` = :employeeId";
+        $query = "UPDATE ".self::DB_TABLE." SET `name` = ':name', `surname` = ':surname', `room` = :room, `job` = ':job', `wage`= :wage, `admin` = 0 WHERE `employee_id` = :employeeId";
         $stmt = PDOProvider::get()->prepare($query);
         return $stmt->execute(['employeeId'=>$this->employee_id, 'name'=>$this->name, 'room'=>$this->room, 'job'=>$this->job, 'wage'=>$this->wage]);
     }
@@ -142,7 +142,10 @@ class Staff
     public static function readPost() : self
     {
         $employee = new Staff();
-        $employee->room_id = filter_input(INPUT_POST, 'employee_id', FILTER_VALIDATE_INT);
+
+        $employee->employee_id = filter_input(INPUT_POST, 'employee_id', FILTER_VALIDATE_INT);
+        if ($employee->employee_id)
+            $employee->employee_id = trim($employee->employee_id);
 
         $employee->name = filter_input(INPUT_POST, 'name');
         if ($employee->name)
@@ -162,8 +165,7 @@ class Staff
         $employee->room = filter_input(INPUT_POST, 'room');
         if ($employee->room)
             $employee->room = trim($employee->room);
-        else
-            $employee->room = 0;
+        dump($_POST);
         return $employee;
     }
 }

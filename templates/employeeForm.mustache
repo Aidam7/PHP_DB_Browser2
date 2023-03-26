@@ -22,7 +22,7 @@
     </div>
     <div class="form-group">
         <label for="room">Místnost</label><br>
-        <select class="custom-select" id="room">
+        <select class="form-control" id="room" name="room">
             <option value="{{homeRoom.room_id}}" style="background: lightblue">{{homeRoom.name}}</option>
             {{#rooms}}
                 <option value="{{room_id}}">{{name}}</option>

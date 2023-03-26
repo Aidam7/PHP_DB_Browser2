@@ -36,15 +36,16 @@ class StaffUpdatePage extends CRUDPage
             //zkontroluj je, jinak formulář
             $this->errors = [];
             $isOk = $this->employee->validate($this->errors);
+
             if (!$isOk)
             {
                 $this->state = self::STATE_FORM_REQUESTED;
             }
             else
             {
+
                 //ulož je
                $success = $this->employee->update();
-
                 //přesměruj
                $this->redirect(self::ACTION_UPDATE, $success);
             }
