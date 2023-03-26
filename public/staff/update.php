@@ -6,6 +6,7 @@ class StaffUpdatePage extends CRUDPage
     private ?Staff $employee;
     private ?Room $room;
     private ?array $errors = [];
+    private array $mustacheArray = [];
     private int $state;
 
     protected function prepare(): void
@@ -25,8 +26,20 @@ class StaffUpdatePage extends CRUDPage
             $this->employee = Staff::findByID($employeeId);
             if (!$this->employee)
                 throw new NotFoundException();
+            $this->room = new Room();
             $this->room = Room::findByID($this->employee->room);
+            $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM room ORDER BY room_id;");
+            $stmt->execute();
+            $rooms = $stmt->fetchAll();
 
+            //Tohle je jediný způsob jak se mi podařilo donutit mustache printnout array bez původní místnost - je to stupidní, nevim proč se to děje, ale funguje to no... ¯\_(ツ)_/¯
+            $this->mustacheArray =[];
+            $this->room = Room::findByID($this->employee->room);
+            for ($i = 0; $i < count($rooms);$i++){
+                if($rooms[$i]-> room_id !== $this->room->room_id){
+                    array_push($this->mustacheArray, $rooms[$i]);
+                }
+            }
         }
 
         //když poslal data
@@ -54,19 +67,6 @@ class StaffUpdatePage extends CRUDPage
 
     protected function pageBody()
     {
-
-        $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM room ORDER BY room_id;");
-        $stmt->execute();
-        $rooms = $stmt->fetchAll();
-
-        //Tohle je jediný způsob jak se mi podařilo donutit mustache printnout array bez původní místnost - je to stupidní, nevim proč se to děje, ale funguje to no... ¯\_(ツ)_/¯
-        $mustacheArray =[];
-        for ($i = 0; $i < count($rooms);$i++){
-            if($rooms[$i]-> room_id !== $this->room->room_id){
-                array_push($mustacheArray, $rooms[$i]);
-            }
-        }
-
         return MustacheProvider::get()->render(
             'employeeForm',
             [
@@ -74,7 +74,7 @@ class StaffUpdatePage extends CRUDPage
                 'homeRoom' => $this->room,
                 'employee' => $this->employee,
                 'errors' => $this->errors,
-                'rooms' => $mustacheArray
+                'rooms' => $this->mustacheArray
             ]
         );
     }
@@ -90,6 +90,9 @@ class StaffUpdatePage extends CRUDPage
 }
 
 $page = new StaffUpdatePage();
-$page->render();
+try {
+    $page->render();
+} catch (Exception $e) {
+}
 
 ?>

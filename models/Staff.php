@@ -111,9 +111,9 @@ class Staff
         if (!isset($this->employee_id) || !$this->employee_id)
             throw new Exception("Cannot update model without ID");
 
-        $query = "UPDATE ".self::DB_TABLE." SET `name` = :name, `no` = :no, `phone` = :phone WHERE `room_id` = :roomId";
+        $query = "UPDATE ".self::DB_TABLE." SET `name` = :name, `surname` = :surname, `room` = :room, `job` =:job, `wage`=:wage WHERE `employee_id` = :employeeId";
         $stmt = PDOProvider::get()->prepare($query);
-        return $stmt->execute(['roomId'=>$this->employee_id, 'name'=>$this->name, 'no'=>$this->no, 'phone'=>$this->phone]);
+        return $stmt->execute(['employeeId'=>$this->employee_id, 'name'=>$this->name, 'room'=>$this->room, 'job'=>$this->job, 'wage'=>$this->wage]);
     }
 
     public function delete() : bool
