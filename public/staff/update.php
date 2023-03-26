@@ -66,7 +66,7 @@ class StaffUpdatePage extends CRUDPage
                 array_push($mustacheArray, $rooms[$i]);
             }
         }
-        dump($rooms);
+        
         return MustacheProvider::get()->render(
             'employeeForm',
             [
