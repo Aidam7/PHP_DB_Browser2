@@ -133,8 +133,8 @@ class Staff
         if (!isset($this->name) || (!$this->name))
             $errors['name'] = 'Jméno nesmí být prázdné';
 
-        if (!isset($this->no) || (!$this->no))
-            $errors['no'] = 'Číslo musí být vyplněno';
+        if (!isset($this->surname) || (!$this->surname))
+            $errors['surname'] = 'Příjmení musí být vyplněno';
 
         return count($errors) === 0;
     }
@@ -148,16 +148,22 @@ class Staff
         if ($employee->name)
             $employee->name = trim($employee->name);
 
-        $employee->no = filter_input(INPUT_POST, 'no');
-        if ($employee->no)
-            $employee->no = trim($employee->no);
+        $employee->surname = filter_input(INPUT_POST, 'surname');
+        if ($employee->surname)
+            $employee->surname = trim($employee->surname);
 
-        $employee->phone = filter_input(INPUT_POST, 'phone');
-        if ($employee->phone)
-            $employee->phone = trim($employee->phone);
-        if (!$employee->phone)
-            $employee->null;
+        $employee->job = filter_input(INPUT_POST, 'job');
+        if ($employee->job)
+            $employee->job = trim($employee->job);
 
+        $employee->wage = filter_input(INPUT_POST, 'wage');
+        if ($employee->wage)
+            $employee->wage = trim($employee->wage);
+        $employee->room = filter_input(INPUT_POST, 'room');
+        if ($employee->room)
+            $employee->room = trim($employee->room);
+        else
+            $employee->room = 0;
         return $employee;
     }
 }
