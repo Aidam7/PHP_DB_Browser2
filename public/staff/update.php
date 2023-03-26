@@ -59,7 +59,7 @@ class StaffUpdatePage extends CRUDPage
         $stmt->execute();
         $rooms = $stmt->fetchAll();
 
-        //Tohle je jediný způsob jak se mi podařilo donutit mustache printnout array bez původní místnost - je to stupidní
+        //Tohle je jediný způsob jak se mi podařilo donutit mustache printnout array bez původní místnost - je to stupidní, nevim proč se to děje, ale funguje to no... ¯\_(ツ)_/¯
         $mustacheArray =[];
         for ($i = 0; $i < count($rooms);$i++){
             if($rooms[$i]-> room_id !== $this->room->room_id){
