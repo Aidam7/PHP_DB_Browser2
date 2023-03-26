@@ -5,7 +5,6 @@ class StaffUpdatePage extends CRUDPage
 {
     private ?Staff $employee;
     private ?Room $room;
-    private array $rooms = [];
     private ?array $errors = [];
     private int $state;
 
@@ -27,11 +26,6 @@ class StaffUpdatePage extends CRUDPage
             if (!$this->employee)
                 throw new NotFoundException();
             $this->room = Room::findByID($this->employee->room);
-            $this->rooms = Room::getAll();
-
-            if (($index = array_search($this->room, $this->rooms)) !== false) {
-                unset($this->rooms[$index]);
-            }
 
         }
 
@@ -60,14 +54,27 @@ class StaffUpdatePage extends CRUDPage
 
     protected function pageBody()
     {
+
+        $stmt = PDOProvider::get()->prepare('SELECT name, room_id FROM room;');
+        $stmt->execute();
+        $rooms = $stmt->fetchAll();
+
+        //Tohle je jediný způsob jak se mi podařilo donutit mustache printnout array bez původní místnost - je to stupidní
+        $mustacheArray =[];
+        for ($i = 0; $i < count($rooms);$i++){
+            if($rooms[$i]-> room_id !== $this->room->room_id){
+                array_push($mustacheArray, $rooms[$i]);
+            }
+        }
+        dump($rooms);
         return MustacheProvider::get()->render(
             'employeeForm',
             [
                 'formHeader' => 'Upravit zaměstnance',
                 'homeRoom' => $this->room,
-                'rooms' => $this->rooms,
                 'employee' => $this->employee,
-                'errors' => $this->errors
+                'errors' => $this->errors,
+                'rooms' => $mustacheArray
             ]
         );
     }
