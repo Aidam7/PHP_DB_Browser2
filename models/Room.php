@@ -10,6 +10,7 @@ class Room
     public ?string $name;
     public ?string $no;
     public ?string $phone;
+    public ?array $homeStaff = [];
 
     /**
      * @param int|null $room_id
