@@ -111,9 +111,16 @@ class Staff
         if (!isset($this->employee_id) || !$this->employee_id)
             throw new Exception("Cannot update model without ID");
 
-        $query = "UPDATE ".self::DB_TABLE." SET `name` = ':name', `surname` = ':surname', `room` = :room, `job` = ':job', `wage`= :wage, `admin` = 0 WHERE `employee_id` = :employeeId";
+        $query = "UPDATE ".Staff::DB_TABLE." SET `name` = :name, `surname` = :surname, `room` = :room, `job` = :job, `wage`= :wage, `admin` = 0 WHERE `employee_id` = :employeeId";
         $stmt = PDOProvider::get()->prepare($query);
-        return $stmt->execute(['employeeId'=>$this->employee_id, 'name'=>$this->name, 'room'=>$this->room, 'job'=>$this->job, 'wage'=>$this->wage]);
+        return $stmt->execute([
+            'employeeId'=>$this->employee_id,
+            'name'=>$this->name,
+            'surname'=>$this->surname,
+            'room'=>$this->room,
+            'job'=>$this->job,
+            'wage'=>$this->wage
+        ]);
     }
 
     public function delete() : bool
@@ -165,7 +172,6 @@ class Staff
         $employee->room = filter_input(INPUT_POST, 'room');
         if ($employee->room)
             $employee->room = trim($employee->room);
-        dump($_POST);
         return $employee;
     }
 }
