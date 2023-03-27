@@ -56,7 +56,7 @@ class EmployeesPage extends CRUDPage
 
         //získat data
 //        $employees = Staff::getAll(['name' => 'ASC']);
-        $stmt = PDOProvider::get()->prepare("SELECT e.`surname`, e.`name`, e.`employee_id`, e.`room`, e.`job`, r.`phone`, r.`name` roomName FROM `employee` e, `room` r WHERE e.`room` = r.`room_id` ORDER BY e.`surname`, e.`name`");
+        $stmt = PDOProvider::get()->prepare("SELECT e.`surname`, e.`name`, e.`employee_id`, e.`room`, e.`job`, r.`phone`, r.`name` roomName, r.`room_id` FROM `employee` e, `room` r WHERE e.`room` = r.`room_id` ORDER BY e.`surname`, e.`name`");
         $stmt->execute();
         $employees = $stmt->fetchAll();
         //prezentovat data
