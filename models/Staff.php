@@ -143,6 +143,13 @@ class Staff
         if (!isset($this->surname) || (!$this->surname))
             $errors['surname'] = 'Příjmení musí být vyplněno';
 
+        if (!isset($this->wage) || (!$this->wage))
+            $errors['wage'] = 'Plat musí být vyplněn nebo musí být větší než 1, buďme lidský 👍';
+
+        if (!isset($this->room) || (!$this->room))
+            $errors['room'] = 'Neplatná místnost';
+
+
         return count($errors) === 0;
     }
 
@@ -166,12 +173,13 @@ class Staff
         if ($employee->job)
             $employee->job = trim($employee->job);
 
-        $employee->wage = filter_input(INPUT_POST, 'wage');
-        if ($employee->wage)
-            $employee->wage = trim($employee->wage);
-        $employee->room = filter_input(INPUT_POST, 'room');
-        if ($employee->room)
-            $employee->room = trim($employee->room);
+        $tempWage = filter_input(INPUT_POST, 'wage');
+        if(is_numeric($tempWage) && $tempWage > 0)
+            $employee->wage = filter_input(INPUT_POST, 'wage');
+
+        $tempRoom = filter_input(INPUT_POST, 'room');
+        if(is_numeric($tempRoom) && $tempRoom > 0)
+            $employee->room = filter_input(INPUT_POST, 'room');
         return $employee;
     }
 }
