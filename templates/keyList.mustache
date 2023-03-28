@@ -1,20 +1,16 @@
 <table class='table table-striped'>
 
     <tr>
-        <th>Identifikátor</th>
         <th>Místnost</th>
+        <th>Identifikátor</th>
         <th>Administrace</th>
     </tr>
 
     {{#keys}}
         <tr>
-            <td>{{key_id}}</td>
             <td><a href="../room/detail.php?roomId={{room_id}}">{{room_name}}</a></td>
+            <td>{{key_id}}</td>
             <td>
-                <form action="../key/update.php" method="get" style="display: inline-block">
-                    <input type="hidden" name="employeeId" value="{{key_id}}">
-                    <input type="submit" value="Upravit" class="btn btn-info">
-                </form>
                 <form action="../key/delete.php" method="post" style="display: inline-block">
                     <input type="hidden" name="employeeId" value="{{key_id}}">
                     <input type="submit" value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat klíč?\nAkce je nevratná!');">
