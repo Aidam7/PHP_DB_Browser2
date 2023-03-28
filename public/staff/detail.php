@@ -15,6 +15,32 @@ class EmployeeDetailPage extends BasePage
         if (!$employeeId)
             throw new BadRequestException();
 
+        //pokud přišel výsledek, zachytím ho
+        $crudResult = filter_input(INPUT_GET, 'success', FILTER_VALIDATE_INT);
+        $crudAction = filter_input(INPUT_GET, 'action');
+
+        if (is_int($crudResult)) {
+            $this->alert = [
+                'alertClass' => $crudResult === 0 ? 'danger' : 'success'
+            ];
+
+            $message = '';
+            if ($crudResult === 0)
+            {
+                $message = 'Operace nebyla úspěšná';
+            }
+            else if ($crudAction === CRUDPage::ACTION_DELETE)
+            {
+                $message = 'Smazání proběhlo úspěšně';
+            }
+            else if ($crudAction === CRUDPage::ACTION_INSERT)
+            {
+                $message = 'Klíč byl založen úspěšně';
+            }
+
+            $this->alert['message'] = $message;
+        }
+
         //najít místnost v databázi
         $this->employee = Staff::findByID($employeeId);
         if (!$this->employee)
@@ -36,12 +62,15 @@ class EmployeeDetailPage extends BasePage
     protected function pageBody()
     {
         $html = "";
+        if ($this->alert) {
+            $html .= MustacheProvider::get()->render('crudResult', $this->alert);
+        }
         $html .= MustacheProvider::get()->render(
             'employeeDetail',
             ['employee' => $this->employees]
         );
         $html .= MustacheProvider::get()->render(
-            'keyList',['keys'=> $this->keys]
+            'keyList',['keys'=> $this->keys, 'employeeId' => $this->employee->employee_id]
         );
         //prezentovat data
         return $html;

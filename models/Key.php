@@ -31,6 +31,7 @@ class Key
         $key->room_name = $stmt->fetch();
         return $key;
     }
+
     private function hydrate(array|object $data)
     {
         $fields = ['key_id', 'room_id', 'employee_id'];
@@ -70,7 +71,6 @@ class Key
     public static function readPost() : self
     {
         $key = new self();
-
         $key->key_id = filter_input(INPUT_POST, 'key_id', FILTER_VALIDATE_INT);
         if ($key->key_id)
             $key->key_id = trim($key->key_id);
@@ -83,5 +83,17 @@ class Key
         if($key->employee_id)
             $key->employee_id = trim($key->employee_id);
         return $key;
+    }
+
+    public function insert() : bool
+    {
+        $query = "INSERT INTO `".self::DB_TABLE."` (`key_id`, `employee`, `room`) VALUES (:keyId, :employee, :room)";
+        $stmt = PDOProvider::get()->prepare($query);
+        $result = $stmt->execute(['keyId'=>$this->key_id, 'employee'=>$this->employee_id, 'room'=>$this->room_id]);
+        if (!$result)
+            return false;
+
+        $this->room_id = PDOProvider::get()->lastInsertId();
+        return true;
     }
 }
