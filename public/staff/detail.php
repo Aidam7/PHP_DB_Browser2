@@ -29,11 +29,11 @@ class EmployeeDetailPage extends BasePage
             {
                 $message = 'Operace nebyla úspěšná';
             }
-            else if ($crudAction === EmployeesPage::ACTION_DELETE)
+            else if ($crudAction === CRUDPage::ACTION_DELETE)
             {
                 $message = 'Smazání proběhlo úspěšně';
             }
-            else if ($crudAction === EmployeesPage::ACTION_INSERT)
+            else if ($crudAction === CRUDPage::ACTION_INSERT)
             {
                 $message = 'Klíč byl založen úspěšně';
             }
@@ -62,6 +62,9 @@ class EmployeeDetailPage extends BasePage
     protected function pageBody()
     {
         $html = "";
+        if ($this->alert) {
+            $html .= MustacheProvider::get()->render('crudResult', $this->alert);
+        }
         $html .= MustacheProvider::get()->render(
             'employeeDetail',
             ['employee' => $this->employees]

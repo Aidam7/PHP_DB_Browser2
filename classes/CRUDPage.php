@@ -18,7 +18,7 @@ abstract class CRUDPage extends BasePage
         if($differentLocation == null)
             header('Location: list.php?' . http_build_query($data) );
         else
-            header($differentLocation . http_build_query($data));
+            header('Location: '.$differentLocation . http_build_query($data));
 
         exit;
     }
