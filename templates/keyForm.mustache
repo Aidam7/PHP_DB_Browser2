@@ -1,8 +1,8 @@
 <h2>{{formHeader}}</h2>
 <form method="post">
     <div class="form-group">
-        <label for="employee_id">Identifikátor zaměstnance</label>
-        <input type="text" class="form-control" id="employee_id" name="employee_id" value="{{key.employee_id}}" required>
+        <label hidden for="employee_id">Identifikátor zaměstnance</label>
+        <input type="hidden" class="form-control" id="employee_id" name="employee_id" value="{{key.employee_id}}" required>
         {{#errors.employee_id}}<div class="d-block invalid-feedback">{{errors.employee_id}}</div>{{/errors.employee_id}}
     </div>
     <div class="form-group">
