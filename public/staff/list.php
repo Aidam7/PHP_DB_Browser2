@@ -30,6 +30,9 @@ class EmployeesPage extends CRUDPage
             else if ($crudAction === self::ACTION_DELETE)
             {
                 $message = 'Smazání proběhlo úspěšně';
+                $this->alert = [
+                    'alertClass' => 'danger'
+                ];
             }
             else if ($crudAction === self::ACTION_INSERT)
             {
