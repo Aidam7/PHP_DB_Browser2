@@ -41,7 +41,7 @@ class EmployeeDetailPage extends BasePage
             ['employee' => $this->employees]
         );
         $html .= MustacheProvider::get()->render(
-            'keyList',['keys'=> $this->keys]
+            'keyList',['keys'=> $this->keys, 'employeeId' => $this->employee->employee_id]
         );
         //prezentovat data
         return $html;
