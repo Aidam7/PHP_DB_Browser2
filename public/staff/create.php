@@ -46,7 +46,7 @@ class EmployeeCreatePage extends CRUDPage
 
     protected function pageBody()
     {
-        $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM ". Room::DB_TABLE ." ORDER BY room_id;");
+        $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM ". Room::DB_TABLE ." ORDER BY name;");
         $stmt->execute();
         $this->allRooms = $stmt->fetchAll();
         return MustacheProvider::get()->render(
