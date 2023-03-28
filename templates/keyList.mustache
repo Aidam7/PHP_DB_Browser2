@@ -1,0 +1,30 @@
+<table class='table table-striped'>
+    {{#keys}}
+    <tr>
+        <th>Identifikátor</th>
+        <th>Místnost</th>
+        <th>Administrace</th>
+    </tr>
+
+
+        <tr>
+            <td>{{key_id}}</td>
+            <td><a href="../room/detail.php?roomId={{room_id}}">{{room_name}}</a></td>
+                <form action="../key/update.php" method="get" style="dispalay: inline-block">
+                    <input type="hidden" name="employeeId" value="{{key_id}}">
+                    <input type="submit" value="Upravit" class="btn btn-info">
+                </form>
+                <form action="../key/delete.php" method="post" style="display: inline-block">
+                    <input type="hidden" name="employeeId" value="{{key_id}}">
+                    <input type="submit" value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat klíč?\nAkce je nevratná!');">
+                </form>
+            </td>
+        </tr>
+    {{/keys}}
+    {{^keys}}
+        <tr><td colspan="3">Zaměstnanec nevlastní klíče</td></tr>
+    {{/keys}}
+
+</table>
+
+<a href="../key/create.php" class="btn btn-primary">Založit nový klíč</a>
