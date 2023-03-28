@@ -1,15 +1,16 @@
 <table class='table table-striped'>
-    {{#keys}}
+
     <tr>
         <th>Identifikátor</th>
         <th>Místnost</th>
         <th>Administrace</th>
     </tr>
 
-
+    {{#keys}}
         <tr>
             <td>{{key_id}}</td>
             <td><a href="../room/detail.php?roomId={{room_id}}">{{room_name}}</a></td>
+            <td>
                 <form action="../key/update.php" method="get" style="dispalay: inline-block">
                     <input type="hidden" name="employeeId" value="{{key_id}}">
                     <input type="submit" value="Upravit" class="btn btn-info">
