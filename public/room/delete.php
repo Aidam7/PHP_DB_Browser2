@@ -26,7 +26,7 @@ class RoomDeletePage extends CRUDPage
 
 }
 
-$page = new KeyDeletePage();
+$page = new RoomDeletePage();
 $page->render();
 
 ?>
