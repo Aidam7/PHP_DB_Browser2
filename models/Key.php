@@ -7,6 +7,7 @@ class Key
     public ?int $key_id;
     public ?int $room_id;
     public ?int $employee_id;
+    public ?string $room_name;
 
     public function __construct(?int $key_id = null, ?int $room_id = null, ?int $employee_id = null)
     {
@@ -25,6 +26,9 @@ class Key
 
         $key = new self();
         $key->hydrate($stmt->fetch());
+        $stmt = PDOProvider::get()->prepare("SELECT `name` FROM " . Room::DB_TABLE . " WHERE `room_id` = :roomId");
+        $stmt->execute(['roomId'=> $key->room_id]);
+        $key->room_name = $stmt->fetch();
         return $key;
     }
     private function hydrate(array|object $data)

@@ -56,7 +56,7 @@ class StaffUpdatePage extends CRUDPage
     {
 
         $this->room = Room::findByID($this->employee->room);
-        $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM room ORDER BY room_id;");
+        $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM room ORDER BY name;");
         $stmt->execute();
         $this->allRooms = $stmt->fetchAll();
 

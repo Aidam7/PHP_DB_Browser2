@@ -5,6 +5,7 @@ class EmployeeDetailPage extends BasePage
 {
     private $employee;
     private $employees;
+    private array $keys = [];
 
     protected function prepare(): void
     {
@@ -26,15 +27,24 @@ class EmployeeDetailPage extends BasePage
 
         $this->title = "Detail zaměstnance {$this->employee->employee_id}";
 
+        $stmt = PDOProvider::get()->prepare("SELECT k.key_id, k.employee `employee_id`, k.room `room_id`, r.name `room_name` FROM `".Key::DB_TABLE."` k JOIN ".Room::DB_TABLE." r ON k.room = r.room_id WHERE k.employee =:employeeId ORDER BY r.name");
+        $stmt->execute(['employeeId' => $employeeId]);
+        $this->keys = $stmt->fetchAll();
+
     }
 
     protected function pageBody()
     {
-        //prezentovat data
-        return MustacheProvider::get()->render(
+        $html = "";
+        $html .= MustacheProvider::get()->render(
             'employeeDetail',
             ['employee' => $this->employees]
         );
+        $html .= MustacheProvider::get()->render(
+            'keyList',['keys'=> $this->keys]
+        );
+        //prezentovat data
+        return $html;
     }
 
 }
