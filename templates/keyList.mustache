@@ -12,7 +12,8 @@
             <td>{{key_id}}</td>
             <td>
                 <form action="../key/delete.php" method="post" style="display: inline-block">
-                    <input type="hidden" name="employeeId" value="{{key_id}}">
+                    <input type="hidden" name="keyId" value="{{key_id}}">
+                    <input type="hidden" name="employeeId" value="{{employeeId}}">
                     <input type="submit" value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat klíč?\nAkce je nevratná!');">
                 </form>
             </td>
