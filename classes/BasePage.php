@@ -3,6 +3,8 @@
 abstract class BasePage
 {
     protected string $title = "";
+    protected ?string $status = null;
+    protected Staff $user;
 
     protected function prepare() : void
     {}
@@ -33,7 +35,13 @@ abstract class BasePage
     {
         try
         {
+            if(!isset($_SESSION))
+                session_start();
             $this->prepare();
+            if(!isset($_SESSION['user'])){
+                http_response_code(401);
+                header('Location: ../login.php');
+            }
             $this->sendHttpHeaders();
 
             $m = MustacheProvider::get();
