@@ -6,6 +6,7 @@ class EmployeeDetailPage extends BasePage
     private $employee;
     private $employees;
     private array $keys = [];
+    private $alert = [];
 
     protected function prepare(): void
     {

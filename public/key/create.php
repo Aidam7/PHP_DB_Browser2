@@ -41,7 +41,7 @@ class KeyCreatePage extends CRUDPage
 
                 //přesměruj
 
-                $this->redirect(self::ACTION_INSERT, $success, "../../staff/detail.php?employeeId=".$this->key->employee_id."&");
+                $this->redirect(self::ACTION_INSERT, $success, "../staff/detail.php?employeeId=".$this->key->employee_id."&");
             }
         }
     }
