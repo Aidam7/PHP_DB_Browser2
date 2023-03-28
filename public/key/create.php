@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . "/../../bootstrap/bootstrap.php";
 
-class EmployeeCreatePage extends CRUDPage
+class KeyCreatePage extends CRUDPage
 {
-    private ?Staff $employee;
+    private ?Key $key;
     private ?array $errors = [];
     private int $state;
     private array $allRooms = [];
@@ -12,23 +12,24 @@ class EmployeeCreatePage extends CRUDPage
     {
         parent::prepare();
         $this->findState();
-        $this->title = "Založit nového zaměstnance";
+        $this->title = "Založit nový klíč";
 
         //když chce formulář
         if ($this->state === self::STATE_FORM_REQUESTED)
         {
             //jdi dál
-            $this->employee = new Staff();
+            $this->key = new Key();
+            $this->key->employee_id = filter_input(INPUT_GET, 'employeeId', FILTER_VALIDATE_INT);
         }
 
         //když poslal data
         elseif($this->state === self::STATE_DATA_SENT) {
             //načti je
-            $this->employee = Staff::readPost();
+            $this->key = Key::readPost();
 
             //zkontroluj je, jinak formulář
             $this->errors = [];
-            $isOk = $this->employee->validate($this->errors);
+            $isOk = $this->key->validate($this->errors);
             if (!$isOk)
             {
                 $this->state = self::STATE_FORM_REQUESTED;
@@ -36,10 +37,11 @@ class EmployeeCreatePage extends CRUDPage
             else
             {
                 //ulož je
-               $success = $this->employee->insert();
+                $success = $this->key->insert();
 
                 //přesměruj
-               $this->redirect(self::ACTION_INSERT, $success);
+
+                $this->redirect(self::ACTION_INSERT, $success, "../staff/detail.php?employeeId=".$this->key->employee_id."&");
             }
         }
     }
@@ -50,10 +52,10 @@ class EmployeeCreatePage extends CRUDPage
         $stmt->execute();
         $this->allRooms = $stmt->fetchAll();
         return MustacheProvider::get()->render(
-            'employeeForm',
+            'keyForm',
             [
-                'formHeader' => 'Založit zaměstnance',
-                'employee' => $this->employee,
+                'formHeader' => 'Založit klíč',
+                'key' => $this->key,
                 'rooms' => $this->allRooms,
                 'errors' => $this->errors
             ]
@@ -70,7 +72,7 @@ class EmployeeCreatePage extends CRUDPage
 
 }
 
-$page = new EmployeeCreatePage();
+$page = new KeyCreatePage();
 $page->render();
 
 ?>
