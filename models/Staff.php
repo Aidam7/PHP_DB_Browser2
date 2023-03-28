@@ -111,9 +111,16 @@ class Staff
         if (!isset($this->employee_id) || !$this->employee_id)
             throw new Exception("Cannot update model without ID");
 
-        $query = "UPDATE ".self::DB_TABLE." SET `name` = ':name', `surname` = ':surname', `room` = :room, `job` = ':job', `wage`= :wage, `admin` = 0 WHERE `employee_id` = :employeeId";
+        $query = "UPDATE ".Staff::DB_TABLE." SET `name` = :name, `surname` = :surname, `room` = :room, `job` = :job, `wage`= :wage, `admin` = 0 WHERE `employee_id` = :employeeId";
         $stmt = PDOProvider::get()->prepare($query);
-        return $stmt->execute(['employeeId'=>$this->employee_id, 'name'=>$this->name, 'room'=>$this->room, 'job'=>$this->job, 'wage'=>$this->wage]);
+        return $stmt->execute([
+            'employeeId'=>$this->employee_id,
+            'name'=>$this->name,
+            'surname'=>$this->surname,
+            'room'=>$this->room,
+            'job'=>$this->job,
+            'wage'=>$this->wage
+        ]);
     }
 
     public function delete() : bool
@@ -135,6 +142,13 @@ class Staff
 
         if (!isset($this->surname) || (!$this->surname))
             $errors['surname'] = 'Příjmení musí být vyplněno';
+
+        if (!isset($this->wage) || (!$this->wage))
+            $errors['wage'] = 'Plat musí být vyplněn';
+
+        if (!isset($this->room) || (!$this->room))
+            $errors['room'] = 'Neplatná místnost';
+
 
         return count($errors) === 0;
     }
@@ -159,13 +173,13 @@ class Staff
         if ($employee->job)
             $employee->job = trim($employee->job);
 
-        $employee->wage = filter_input(INPUT_POST, 'wage');
+        $employee->wage = filter_input(INPUT_POST, 'wage', FILTER_VALIDATE_INT);
         if ($employee->wage)
             $employee->wage = trim($employee->wage);
-        $employee->room = filter_input(INPUT_POST, 'room');
+        
+        $employee->room = filter_input(INPUT_POST, 'room', FILTER_VALIDATE_INT);
         if ($employee->room)
             $employee->room = trim($employee->room);
-        dump($_POST);
         return $employee;
     }
 }

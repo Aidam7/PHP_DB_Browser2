@@ -6,6 +6,7 @@ class EmployeeCreatePage extends CRUDPage
     private ?Staff $employee;
     private ?array $errors = [];
     private int $state;
+    private array $allRooms = [];
 
     protected function prepare(): void
     {
@@ -45,11 +46,15 @@ class EmployeeCreatePage extends CRUDPage
 
     protected function pageBody()
     {
+        $stmt = PDOProvider::get()->prepare("SELECT name, room_id FROM ". Room::DB_TABLE ." ORDER BY room_id;");
+        $stmt->execute();
+        $this->allRooms = $stmt->fetchAll();
         return MustacheProvider::get()->render(
             'employeeForm',
             [
                 'formHeader' => 'Založit zaměstnance',
                 'employee' => $this->employee,
+                'rooms' => $this->allRooms,
                 'errors' => $this->errors
             ]
         );
