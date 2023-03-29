@@ -9,10 +9,27 @@ class LoginPage extends BasePage
     {
         $this->title = "Přihlašte se prosím";
     }
+    public function render(): void
+    {
+        $this->prepare();
+        $this->sendHttpHeaders();
+
+        $m = MustacheProvider::get();
+        $data = [
+            'lang' => AppConfig::get('app.lang'),
+            'title' => $this->title,
+            'pageHeader' => $this->pageHeader(),
+            'pageBody' => $this->pageBody(),
+            'pageFooter' => $this->pageFooter()
+        ];
+
+        echo $m->render("page", $data);
+    }
     protected function prepare(): void
     {
         parent::prepare();
         $this->login = filter_input(INPUT_POST,'login');
+        dump($this->login);
         $this->password = filter_input(INPUT_POST,'password');
         if($this->login !== null && $this->password !== null){
             header("Location: index.php");
@@ -21,7 +38,7 @@ class LoginPage extends BasePage
 
     protected function pageBody()
     {
-        $html =  MustacheProvider::get()->render('loginForm');
+        $html =  MustacheProvider::get()->render('loginForm',["login"=>$this->login]);
         return $html;
     }
 
