@@ -8,12 +8,16 @@ class StaffDeletePage extends CRUDPage
     {
         parent::prepare();
 
-        $roomId = filter_input(INPUT_POST, 'employeeId', FILTER_VALIDATE_INT);
-        if (!$roomId)
+        $employeeId = filter_input(INPUT_POST, 'employeeId', FILTER_VALIDATE_INT);
+        if (!$employeeId)
             throw new BadRequestException();
 
+        //Should be impossible but just in case
+        if($_SESSION['admin'] != 1)
+            throw new AccessDeniedException();
+
         //když poslal data
-        $success = Staff::deleteByID($roomId);
+        $success = Staff::deleteByID($employeeId);
 
         //přesměruj
         $this->redirect(self::ACTION_DELETE, $success);

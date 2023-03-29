@@ -12,6 +12,9 @@ class RoomDeletePage extends CRUDPage
         if (!$roomId)
             throw new BadRequestException();
 
+        //Should be impossible but just in case
+        if($_SESSION['admin'] != 1)
+            throw new AccessDeniedException();
         //když poslal data
         $success = Room::deleteByID($roomId);
 

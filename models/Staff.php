@@ -132,6 +132,8 @@ class Staff
     {
         $query = "DELETE FROM `".self::DB_TABLE."` WHERE `employee_id` = :Id";
         $stmt = PDOProvider::get()->prepare($query);
+        if($employeeId == $_SESSION['user'])
+            return false;
         return $stmt->execute(['Id'=>$employeeId]);
     }
 

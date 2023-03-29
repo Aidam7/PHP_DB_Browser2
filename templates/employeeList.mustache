@@ -5,7 +5,7 @@
         <th>Pozice</th>
         <th>Místnost</th>
         <th>Telefon</th>
-        <th>Administrace</th>
+        {{#admin}}<th>Administrace</th>{{/admin}}
     </tr>
 
     {{#employees}}
@@ -17,16 +17,18 @@
         <td>{{job}}</td>
         <td><a href="../room/detail.php?roomId={{room_id}}">{{roomName}}</a></td>
         <td>{{#phone}}{{phone}}{{/phone}}{{^phone}}&mdash;{{/phone}}</td>
-        <td>
-            <form action="update.php" method="get" style="display: inline-block">
-                <input type="hidden" name="employeeId" value="{{employee_id}}">
-                <input type="submit" value="Upravit" class="btn btn-info">
-            </form>
-            <form action="delete.php" method="post" style="display: inline-block">
-                <input type="hidden" name="employeeId" value="{{employee_id}}">
-                <input type="submit" value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat zaměstnance?\nAkce je nevratná!');">
-            </form>
-        </td>
+        {{#admin}}
+            <td>
+                <form action="update.php" method="get" style="display: inline-block">
+                    <input type="hidden" name="employeeId" value="{{employee_id}}">
+                    <input type="submit" value="Upravit" class="btn btn-info">
+                </form>
+                <form action="delete.php" method="post" style="display: inline-block">
+                    <input type="hidden" name="employeeId" value="{{employee_id}}">
+                    <input type="submit" value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat zaměstnance?\nAkce je nevratná!');">
+                </form>
+            </td>
+        {{/admin}}
     </tr>
     {{/employees}}
     {{^employees}}
@@ -34,6 +36,13 @@
     {{/employees}}
 
 </table>
-
-<a href="create.php" class="btn btn-primary">Založit nového zaměstnance</a>
+{{#admin}}
+    <a href="create.php" class="btn btn-primary">Založit nového zaměstnance</a>
+{{/admin}}
+{{^admin}}
+    <form action="update.php" method="get" style="display: inline-block">
+        <input type="hidden" name="employeeId" value="{{ownId}}">
+        <input type="submit" value="Upravit svůj záznam" class="btn btn-info">
+    </form>
+{{/admin}}
 

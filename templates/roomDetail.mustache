@@ -12,11 +12,22 @@
 
 
     <dt>Lidé</dt>
-    {{^employees}}&mdash;{{/employees}}
-    {{#employees}}
-        <dd>
-            <a href='../staff/detail.php?employeeId={{employee_id}}'>{{surname}} {{name}}</a>
-        </dd>
-    {{/employees}}
+    <table class='table table-striped'>
+        <tr>
+            <th>Jméno</th>
+            <th>Identifikátor</th>
+        </tr>
+        {{#employees}}
+            <tr>
+                <td><a href='../staff/detail.php?employeeId={{employee_id}}'>{{surname}} {{name}}</a></td>
+                <td>{{employee_id}}</td>
+            </tr>
+        {{/employees}}
+        {{^employees}}
+            <tr>
+                <td colspan="3">V místnosti žádný zaměstnanec nesídlí</td>
+            </tr>
+        {{/employees}}
+    </table>
 </dl>
 {{/room}}

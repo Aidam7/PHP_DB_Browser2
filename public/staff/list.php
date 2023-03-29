@@ -63,7 +63,10 @@ class EmployeesPage extends CRUDPage
         $stmt->execute();
         $employees = $stmt->fetchAll();
         //prezentovat data
-        $html .= MustacheProvider::get()->render('employeeList',['employees' => $employees]);
+        $isAdmin = null;
+        if($_SESSION['admin'] == 1)
+            $isAdmin=true;
+        $html .= MustacheProvider::get()->render('employeeList',['employees' => $employees, 'admin' => $isAdmin, 'ownId' => $_SESSION['user']]);
 
         return $html;
     }
