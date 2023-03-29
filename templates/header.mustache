@@ -1,9 +1,19 @@
-    <nav>
-        <h1>Prohlížeč databáze firmy</h1>
-        {{#userName}}<div>Přihlášen uživatel: {{userName}} </div>{{/userName}}
-        <li><a href="/logout.php">Odhlásit se</a></li>
-        <ul>
-            <li><a href="/room/list.php">Místnosti</a></li>
-            <li><a href="/staff/list.php">Lidé</a></li>
-        </ul>
-    </nav>
+<nav>
+    <h1>Prohlížeč databáze firmy</h1>
+    {{#userName}}
+        <div class="alert alert-info" role="alert">
+            <h5 class="alert-heading">Přihlášen uživatel: {{userName}}</h5>
+            <a href="/logout.php" class="alert-link">Odhlásit se</a>
+            <hr>
+            <ul>
+                <li><a href="/room/list.php" class="alert-link">Místnosti</a></li>
+                <li><a href="/staff/list.php" class="alert-link">Lidé</a></li>
+            </ul>
+        </div>
+    {{/userName}}
+    {{^userName}}
+        <div class="alert alert-danger" role="alert">
+            Pro přístup je potřeba se přihlásit!
+        </div>
+    {{/userName}}
+</nav>
