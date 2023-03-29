@@ -19,7 +19,8 @@ class RoomUpdatePage extends CRUDPage
             $roomId = filter_input(INPUT_GET, 'roomId', FILTER_VALIDATE_INT);
             if (!$roomId)
                 throw new BadRequestException();
-
+            if($_SESSION['admin'] != 1)
+                throw new AccessDeniedException();
             //jdi dál
             $this->room = Room::findByID($roomId);
             if (!$this->room)
