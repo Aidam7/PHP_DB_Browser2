@@ -9,6 +9,22 @@ class LoginPage extends BasePage
     {
         $this->title = "Přihlašte se prosím";
     }
+    public function render(): void
+    {
+        $this->prepare();
+        $this->sendHttpHeaders();
+
+        $m = MustacheProvider::get();
+        $data = [
+            'lang' => AppConfig::get('app.lang'),
+            'title' => $this->title,
+            'pageHeader' => $this->pageHeader(),
+            'pageBody' => $this->pageBody(),
+            'pageFooter' => $this->pageFooter()
+        ];
+
+        echo $m->render("page", $data);
+    }
     protected function prepare(): void
     {
         parent::prepare();
