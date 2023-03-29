@@ -46,6 +46,8 @@ class LoginPage extends BasePage
             session_abort();
             session_start();
             $_SESSION['user'] = $user->employee_id;
+            $_SESSION['name'] = $user->name;
+            $_SESSION['surname'] = $user->surname;
             $_SESSION['admin'] = $user->admin;
         }
     }

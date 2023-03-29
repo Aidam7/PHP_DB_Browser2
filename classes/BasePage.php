@@ -17,10 +17,10 @@ abstract class BasePage
         return "";
     }
 
-    protected function pageHeader() : string
+    protected function pageHeader(?string $user = null) : string
     {
         $m = MustacheProvider::get();
-        return $m->render('header',[]);
+        return $m->render('header',["userName" => $user]);
     }
 
     abstract protected function pageBody();
@@ -54,7 +54,7 @@ abstract class BasePage
                 $data = [
                     'lang' => AppConfig::get('app.lang'),
                     'title' => $this->title,
-                    'pageHeader' => $this->pageHeader(),
+                    'pageHeader' => $this->pageHeader($_SESSION["surname"]." ".$_SESSION["name"]),
                     'pageBody' => $this->pageBody(),
                     'pageFooter' => $this->pageFooter()
                 ];
