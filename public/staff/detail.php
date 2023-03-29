@@ -33,10 +33,13 @@ class EmployeeDetailPage extends BasePage
             else if ($crudAction === CRUDPage::ACTION_DELETE)
             {
                 $message = 'Smazání proběhlo úspěšně';
+                $this->alert = [
+                    'alertClass' => 'danger'
+                ];
             }
             else if ($crudAction === CRUDPage::ACTION_INSERT)
             {
-                $message = 'Klíč byl založen úspěšně';
+                $message = 'Klíč byl úspěšně založen';
             }
 
             $this->alert['message'] = $message;
