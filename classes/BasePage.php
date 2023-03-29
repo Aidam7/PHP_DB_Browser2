@@ -41,17 +41,27 @@ abstract class BasePage
             if(!isset($_SESSION['user'])){
                 http_response_code(401);
                 header('Location: ../login.php');
+                $data = [
+                    'lang' => AppConfig::get('app.lang'),
+                    'title' => $this->title,
+                    'pageHeader' => $this->pageHeader(),
+                    'pageBody' => $this->pageBody(),
+                    'pageFooter' => $this->pageFooter()
+                ];
             }
-            $this->sendHttpHeaders();
 
+            else{
+                $data = [
+                    'lang' => AppConfig::get('app.lang'),
+                    'title' => $this->title,
+                    'pageHeader' => $this->pageHeader(),
+                    'pageBody' => $this->pageBody(),
+                    'pageFooter' => $this->pageFooter()
+                ];
+
+            }
             $m = MustacheProvider::get();
-            $data = [
-                'lang' => AppConfig::get('app.lang'),
-                'title' => $this->title,
-                'pageHeader' => $this->pageHeader(),
-                'pageBody' => $this->pageBody(),
-                'pageFooter' => $this->pageFooter()
-            ];
+            $this->sendHttpHeaders();
             echo $m->render("page", $data);
         }
 
