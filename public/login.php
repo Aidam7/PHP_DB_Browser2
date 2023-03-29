@@ -29,6 +29,7 @@ class LoginPage extends BasePage
     {
         parent::prepare();
         $this->login = filter_input(INPUT_POST,'login');
+        dump($this->login);
         $this->password = filter_input(INPUT_POST,'password');
         if($this->login !== null && $this->password !== null){
             header("Location: index.php");
@@ -37,7 +38,7 @@ class LoginPage extends BasePage
 
     protected function pageBody()
     {
-        $html =  MustacheProvider::get()->render('loginForm');
+        $html =  MustacheProvider::get()->render('loginForm',["login"=>$this->login]);
         return $html;
     }
 
