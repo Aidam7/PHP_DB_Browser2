@@ -3,11 +3,13 @@ require_once __DIR__ . "/../bootstrap/bootstrap.php";
 
 class LoginPage extends BasePage
 {
+    protected Staff $user;
     private ?string $login = null;
     private ?string $password = null;
     public function __construct()
     {
         $this->title = "Přihlašte se prosím";
+
     }
     public function render(): void
     {
@@ -29,9 +31,15 @@ class LoginPage extends BasePage
     {
         parent::prepare();
         $this->login = filter_input(INPUT_POST,'login');
-        dump($this->login);
         $this->password = filter_input(INPUT_POST,'password');
-        if($this->login !== null && $this->password !== null){
+        if($this->login !== null || $this->login !== "" && $this->password !== null || $this->password !== ""){
+            $stmt = PDOProvider::get()->prepare("SELECT * FROM ".Staff::DB_TABLE." WHERE `login` =:login AND `password` =:password");
+            $stmt ->execute(["login" => $this->login, "password" => $this->password]);
+            $user = $stmt->fetchAll();
+            session_abort();
+            session_start();
+            $_SESSION['user'] = $user->employee_id;
+            $_SESSION['admin'] = $user->admin;
             header("Location: index.php");
         }
     }
