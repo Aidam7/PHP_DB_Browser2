@@ -11,8 +11,8 @@ class LogoutPage extends BasePage
     protected function pageBody() :string
     {
         $_SESSION = array();
-        header( "refresh:3;url=login.php" );
-        return '<h2>Odhlášení proběhlo úspěšně</h2>';
+        header("Location: login.php" );
+        return '';
     }
 
 }
