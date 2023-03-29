@@ -11,6 +11,8 @@ class KeyCreatePage extends CRUDPage
     protected function prepare(): void
     {
         parent::prepare();
+        if($_SESSION['admin'] != 1)
+            throw new AccessDeniedException();
         $this->findState();
         $this->title = "Založit nový klíč";
 

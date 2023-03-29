@@ -12,6 +12,8 @@ class KeyDeletePage extends CRUDPage
         $employeeId = filter_input(INPUT_POST, 'employeeId', FILTER_VALIDATE_INT);
         if (!$keyId)
             throw new BadRequestException();
+        if($_SESSION['admin'] != 1)
+            throw new AccessDeniedException();
 
         //když poslal data
         $success = Key::deleteByID($keyId);
