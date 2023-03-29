@@ -12,6 +12,10 @@ class StaffDeletePage extends CRUDPage
         if (!$employeeId)
             throw new BadRequestException();
 
+        //Should be impossible but just in case
+        if($_SESSION['admin'] != 1)
+            throw new AccessDeniedException();
+
         //když poslal data
         $success = Staff::deleteByID($employeeId);
 
