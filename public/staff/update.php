@@ -68,6 +68,10 @@ class StaffUpdatePage extends CRUDPage
                 array_push($this->mustacheArray, $this->allRooms[$i]);
             }
         }
+        $admin = "";
+        if($this->employee->admin == 1){
+            $admin = "checked";
+        }
         return MustacheProvider::get()->render(
             'employeeForm',
             [
@@ -75,7 +79,9 @@ class StaffUpdatePage extends CRUDPage
                 'homeRoom' => $this->room,
                 'employee' => $this->employee,
                 'errors' => $this->errors,
-                'rooms' => $this->mustacheArray
+                'rooms' => $this->mustacheArray,
+                'admin' => $admin,
+                'adminView' => $_SESSION['admin']
             ]
         );
     }
