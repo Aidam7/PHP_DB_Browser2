@@ -69,6 +69,7 @@ class EmployeeDetailPage extends BasePage
         if ($this->alert) {
             $html .= MustacheProvider::get()->render('crudResult', $this->alert);
         }
+        $isOwner = null;
         if($_SESSION['user'] == $this->employee->employee_id)
             $isOwner = true;
         $html .= MustacheProvider::get()->render(
