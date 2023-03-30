@@ -19,5 +19,5 @@ spl_autoload_register(
 
 error_reporting(E_ALL);
 
-use Tracy\Debugger;
-Debugger::enable();
+//use Tracy\Debugger;
+//Debugger::enable();

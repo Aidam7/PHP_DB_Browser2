@@ -14,7 +14,7 @@ class Staff
     public ?int $room;
     public ?string $login;
     public ?string $password;
-    public ?bool $admin;
+    public ?int $admin;
 
     public function  __construct(?int $employee_id = null, ?string $name = null, ?string $surname = null, ?string $job = null, ?int $wage =  null, ?int $room = null, ?string $login = null, ?string $password = null, ?bool $admin = null){
         $this->employee_id = $employee_id;
@@ -110,8 +110,7 @@ class Staff
     {
         if (!isset($this->employee_id) || !$this->employee_id)
             throw new Exception("Cannot update model without ID");
-
-        $query = "UPDATE ".Staff::DB_TABLE." SET `name` = :name, `surname` = :surname, `room` = :room, `job` = :job, `wage`= :wage, `admin` = 0 WHERE `employee_id` = :employeeId";
+        $query = "UPDATE ".Staff::DB_TABLE." SET `name` = :name, `surname` = :surname, `room` = :room, `job` = :job, `wage`= :wage, `admin` = :admin WHERE `employee_id` = :employeeId";
         $stmt = PDOProvider::get()->prepare($query);
         return $stmt->execute([
             'employeeId'=>$this->employee_id,
@@ -119,7 +118,8 @@ class Staff
             'surname'=>$this->surname,
             'room'=>$this->room,
             'job'=>$this->job,
-            'wage'=>$this->wage
+            'wage'=>$this->wage,
+            'admin'=>$this->admin
         ]);
     }
 
@@ -158,7 +158,6 @@ class Staff
     public static function readPost() : self
     {
         $employee = new Staff();
-
         $employee->employee_id = filter_input(INPUT_POST, 'employee_id', FILTER_VALIDATE_INT);
         if ($employee->employee_id)
             $employee->employee_id = trim($employee->employee_id);
@@ -182,6 +181,10 @@ class Staff
         $employee->room = filter_input(INPUT_POST, 'room', FILTER_VALIDATE_INT);
         if ($employee->room)
             $employee->room = trim($employee->room);
+        $adminCheckbox = 0;
+        if(filter_input(INPUT_POST, 'admin') == "on")
+            $adminCheckbox = 1;
+        $employee->admin = trim($adminCheckbox);
         return $employee;
     }
 }

@@ -74,7 +74,7 @@ abstract class BasePage
 
         catch (Exception $e)
         {
-//            if (AppConfig::get('debug'))
+            if (AppConfig::get('debug'))
                 throw $e;
 
             $e = new BaseException("Server error", 500);

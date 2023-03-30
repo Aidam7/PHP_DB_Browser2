@@ -5,6 +5,7 @@
 
         <label for="password">Heslo</label><br>
         <input type="password" class="form-control" name="password" id="password" value=""/>
+        {{#errors}}<div class="d-block invalid-feedback">Jméno nebo heslo není správné</div>{{/errors}}
     </div>
     <button type="submit" class="btn btn-primary mt-3">Přihlásit se</button>
 </form>

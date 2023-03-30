@@ -21,7 +21,7 @@ class StaffUpdatePage extends CRUDPage
             $employeeId = filter_input(INPUT_GET, 'employeeId', FILTER_VALIDATE_INT);
             if (!$employeeId)
                 throw new BadRequestException();
-            if($employeeId != $_SESSION['user'] && $_SESSION['admin'] != 1)
+            if($_SESSION['admin'] != 1)
                 throw new AccessDeniedException();
 
             //jdi dál
@@ -80,8 +80,7 @@ class StaffUpdatePage extends CRUDPage
                 'employee' => $this->employee,
                 'errors' => $this->errors,
                 'rooms' => $this->mustacheArray,
-                'admin' => $admin,
-                'adminView' => $_SESSION['admin']
+                'admin'=> $admin
             ]
         );
     }

@@ -32,12 +32,10 @@
             {{/rooms}}
         </select>
     </div>
-    {{#adminView}}
         <div class="form-check">
             <label for="admin">Administrátor</label>
             <input type="checkbox" class="form-check-input" id="admin" name="admin" {{admin}}>
         </div>
-    {{/adminView}}
     {{#employee.employee_id}}<input type="hidden" name="employee_id" value="{{employee.employee_id}}">{{/employee.employee_id}}
 
     <button type="submit" class="btn btn-primary mt-3">Odeslat</button>

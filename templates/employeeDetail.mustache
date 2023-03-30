@@ -1,6 +1,12 @@
 {{#employee}}
 <h1>Detail zaměstnance č. {{employee_id}}</h1>
 <dl>
+    {{#owner}}
+        <form action="changeCredentials.php" method="post" style="display: inline-block">
+            <input type="hidden" name="employeeId" value="{{employee_id}}">
+            <input type="submit" value="Změnit přihlašovací údaje" class="btn btn-dark">
+        </form>
+    {{/owner}}
     <dt>Jméno</dt>
     <dd>{{surname}} {{name}}</dd>
     <dt>Pozice</dt>
