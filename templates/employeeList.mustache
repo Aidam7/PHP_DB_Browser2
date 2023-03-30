@@ -39,10 +39,4 @@
 {{#admin}}
     <a href="create.php" class="btn btn-primary">Založit nového zaměstnance</a>
 {{/admin}}
-{{^admin}}
-    <form action="update.php" method="get" style="display: inline-block">
-        <input type="hidden" name="employeeId" value="{{ownId}}">
-        <input type="submit" value="Upravit svůj záznam" class="btn btn-info">
-    </form>
-{{/admin}}
 

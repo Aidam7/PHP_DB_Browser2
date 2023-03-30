@@ -69,13 +69,17 @@ class EmployeeDetailPage extends BasePage
         if ($this->alert) {
             $html .= MustacheProvider::get()->render('crudResult', $this->alert);
         }
+        if($_SESSION['user'] == $this->employee->employee_id)
+            $isOwner = true;
         $html .= MustacheProvider::get()->render(
             'employeeDetail',
-            ['employee' => $this->employees]
+            ['employee' => $this->employees, 'owner' => $isOwner]
         );
         $isAdmin = null;
         if($_SESSION['admin'] == 1)
             $isAdmin = true;
+        $isOwner = null;
+
         $html .= MustacheProvider::get()->render(
             'keyList',['keys'=> $this->keys, 'employeeId' => $this->employee->employee_id, 'admin' => $isAdmin]
         );
