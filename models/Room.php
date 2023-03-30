@@ -145,7 +145,7 @@ class Room
         if ($room->name)
             $room->name = trim($room->name);
 
-        $room->no = filter_input(INPUT_POST, 'no');
+        $room->no = filter_input(INPUT_POST, 'no', FILTER_VALIDATE_INT);
         if ($room->no)
             $room->no = trim($room->no);
 
