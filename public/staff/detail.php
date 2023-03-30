@@ -73,8 +73,11 @@ class EmployeeDetailPage extends BasePage
             'employeeDetail',
             ['employee' => $this->employees]
         );
+        $isAdmin = null;
+        if($_SESSION['admin'] == 1)
+            $isAdmin = true;
         $html .= MustacheProvider::get()->render(
-            'keyList',['keys'=> $this->keys, 'employeeId' => $this->employee->employee_id]
+            'keyList',['keys'=> $this->keys, 'employeeId' => $this->employee->employee_id, 'admin' => $isAdmin]
         );
         //prezentovat data
         return $html;
