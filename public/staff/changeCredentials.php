@@ -5,6 +5,7 @@ class CredentialsChangePage extends CRUDPage
 {
     protected Staff $user;
     private int $employeeId;
+
     protected function prepare(): void
     {
         parent::prepare();
@@ -16,33 +17,28 @@ class CredentialsChangePage extends CRUDPage
         $login = filter_input(INPUT_POST, 'login');
 
         //Should be impossible but just in case
-        if($_SESSION['user'] != $this->employeeId)
+        if ($_SESSION['user'] != $this->employeeId)
             throw new AccessDeniedException();
-        if($newPassword != null)
-            $newPassword = password_hash($newPassword,PASSWORD_DEFAULT);
+        if ($newPassword != null)
+            $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        if ($oldPassword == null)
+            $oldPassword = "";
         $this->user = Staff::findByID($_SESSION['user']);
-        if(password_verify($oldPassword, $this->user->password) && $this->user->login == $login){
-            $query ="UPDATE ".Staff::DB_TABLE." SET `login` = :login, `password` = :password WHERE `employee_id` = :employeeId";
+        if ($this->user->login != $login)
+            return;
+
+        if (password_verify($oldPassword, $this->user->password)){
+            $query = "UPDATE " . Staff::DB_TABLE . " SET `login` = :login, `password` = :password WHERE `employee_id` = :employeeId";
             $stmt = PDOProvider::get()->prepare($query);
-
-            if($stmt->execute([
-                'login'=>$login,
-                'password'=>$newPassword,
-                'employeeId'=>$this->employeeId
-                ])){
-
-            }
         }
-
-
-
-        //přesměruj
-//        $this->redirect(self::ACTION_DELETE, $success);
+        if ($stmt->execute([ 'login' => $login, 'password' => $newPassword, 'employeeId' => $this->employeeId])){
+            $this->redirect(self::ACTION_UPDATE, true);
+        }
     }
 
     protected function pageBody()
     {
-        $html =  MustacheProvider::get()->render('changeLoginForm',["login"=>$this->user->login, "employeeId" => $this->employeeId]);
+        $html = MustacheProvider::get()->render('changeLoginForm', ["login" => $this->user->login, "employeeId" => $this->employeeId]);
         return $html;
     }
 
