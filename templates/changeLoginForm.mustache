@@ -1,0 +1,13 @@
+<form method="post">
+    <div class="form-group">
+        <label for="login">Přihlašovací jméno</label><br>
+        <input type="text" class="form-control" name="login" id="login" value="{{login}}"/>
+        
+        <label for="oldPassword">Staré heslo</label><br>
+        <input type="password" class="form-control" name="oldPassword" id="oldPassword" value=""/>
+        <label for="password">Nové heslo</label><br>
+        <input type="password" class="form-control" name="password" id="password" value=""/>
+    </div>
+    <input type="hidden" name="employeeId" id="employeeId" value="{{employeeId}}">
+    <button type="submit" class="btn btn-primary mt-3">Změnit heslo</button>
+</form>

@@ -39,7 +39,7 @@ class LoginPage extends BasePage
         parent::prepare();
         $this->login = filter_input(INPUT_POST,'login');
         $this->password = filter_input(INPUT_POST,'password');
-        if($this->login !== null || $this->login !== "" && $this->password !== null || $this->password !== ""){
+        if($this->login !== null || $this->login != "" && $this->password !== null || $this->password != ""){
             $stmt = PDOProvider::get()->prepare("SELECT * FROM ".Staff::DB_TABLE." WHERE `login` =:login AND `password` =:password");
             $stmt ->execute(["login" => $this->login, "password" => $this->password]);
             $user = $stmt->fetch();
