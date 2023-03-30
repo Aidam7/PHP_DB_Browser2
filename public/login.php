@@ -6,7 +6,7 @@ class LoginPage extends BasePage
     protected Staff $user;
     private ?string $login = null;
     private ?string $password = null;
-
+    private array $errors = [];
     public function __construct()
     {
         $this->title = "Přihlašte se prosím";
@@ -42,15 +42,28 @@ class LoginPage extends BasePage
         parent::prepare();
         $this->login = filter_input(INPUT_POST, 'login');
         $this->password = filter_input(INPUT_POST, 'password');
-        if ($this->login == null || $this->password == null)
+        if ($this->login == null ||  $this->password == null){
+//           $this->errors[0] = true;
             return;
-        if ($this->login == "" || $this->password == "")
+        }
+        if ($this->login == "" && $this->password != ""){
+            $this->errors[0] = true;
+            $this->pageBody();
             return;
+        }
+        if($this->login != "" && $this->password == ""){
+            $this->errors[0] = true;
+            $this->pageBody();
+            return;
+        }
         $stmt = PDOProvider::get()->prepare("SELECT `password` FROM " . Staff::DB_TABLE . " WHERE `login` =:login");
         $stmt->execute(["login" => $this->login]);
         $userPassword = $stmt->fetch();
-        if (!password_verify($this->password, $userPassword->password))
+        if (!password_verify($this->password, $userPassword->password)){
+            $this->errors[0] = true;
+            $this->pageBody();
             return;
+        }
         $stmt = PDOProvider::get()->prepare("SELECT `employee_id`, `name`, `surname`, `admin` FROM " . Staff::DB_TABLE . " WHERE `login` =:login");
         $stmt->execute(["login" => $this->login]);
         $user = $stmt->fetch();
@@ -64,10 +77,9 @@ class LoginPage extends BasePage
 
     protected function pageBody()
     {
-        $html = MustacheProvider::get()->render('loginForm', ["login" => $this->login]);
+        $html = MustacheProvider::get()->render('loginForm', ["login" => $this->login, "errors" => $this->errors]);
         return $html;
     }
-
 }
 
 $page = new LoginPage();
