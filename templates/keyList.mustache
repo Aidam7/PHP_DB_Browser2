@@ -3,26 +3,34 @@
     <tr>
         <th>Místnost</th>
         <th>Identifikátor</th>
-        <th>Administrace</th>
+        {{#admin}}
+            <th>Administrace</th>
+        {{/admin}}
     </tr>
 
     {{#keys}}
         <tr>
             <td><a href="../room/detail.php?roomId={{room_id}}">{{room_name}}</a></td>
             <td>{{key_id}}</td>
-            <td>
-                <form action="../key/delete.php" method="post" style="display: inline-block">
-                    <input type="hidden" name="keyId" value="{{key_id}}">
-                    <input type="hidden" name="employeeId" value="{{employeeId}}">
-                    <input type="submit" value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat klíč?\nAkce je nevratná!');">
-                </form>
-            </td>
+            {{#admin}}
+                <td>
+                    <form action="../key/delete.php" method="post" style="display: inline-block">
+                        <input type="hidden" name="keyId" value="{{key_id}}">
+                        <input type="hidden" name="employeeId" value="{{employeeId}}">
+                        <input type="submit" value="Smazat" class="btn btn-danger"
+                               onclick="return confirm('Opravdu chcete smazat klíč?\nAkce je nevratná!');">
+                    </form>
+                </td>
+            {{/admin}}
         </tr>
     {{/keys}}
     {{^keys}}
-        <tr><td colspan="3">Zaměstnanec nevlastní klíče</td></tr>
+        <tr>
+            <td colspan="3">Zaměstnanec nevlastní klíče</td>
+        </tr>
     {{/keys}}
 
 </table>
-
-<a href="../key/create.php?employeeId={{employeeId}}" class="btn btn-primary">Založit nový klíč</a>
+{{#admin}}
+    <a href="../key/create.php?employeeId={{employeeId}}" class="btn btn-primary">Založit nový klíč</a>
+{{/admin}}

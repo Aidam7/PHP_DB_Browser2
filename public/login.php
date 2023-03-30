@@ -13,7 +13,14 @@ class LoginPage extends BasePage
     }
     public function render(): void
     {
+        if(!isset($_SESSION))
+            session_start();
+
         $this->prepare();
+
+        if(isset($_SESSION['user'])){
+            header("Location: /index.php");
+        }
         $this->sendHttpHeaders();
 
         $m = MustacheProvider::get();
@@ -35,12 +42,13 @@ class LoginPage extends BasePage
         if($this->login !== null || $this->login !== "" && $this->password !== null || $this->password !== ""){
             $stmt = PDOProvider::get()->prepare("SELECT * FROM ".Staff::DB_TABLE." WHERE `login` =:login AND `password` =:password");
             $stmt ->execute(["login" => $this->login, "password" => $this->password]);
-            $user = $stmt->fetchAll();
+            $user = $stmt->fetch();
             session_abort();
             session_start();
             $_SESSION['user'] = $user->employee_id;
+            $_SESSION['name'] = $user->name;
+            $_SESSION['surname'] = $user->surname;
             $_SESSION['admin'] = $user->admin;
-            header("Location: index.php");
         }
     }
 

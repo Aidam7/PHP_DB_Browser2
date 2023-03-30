@@ -21,6 +21,8 @@ class StaffUpdatePage extends CRUDPage
             $employeeId = filter_input(INPUT_GET, 'employeeId', FILTER_VALIDATE_INT);
             if (!$employeeId)
                 throw new BadRequestException();
+            if($employeeId != $_SESSION['user'] && $_SESSION['admin'] != 1)
+                throw new AccessDeniedException();
 
             //jdi dál
             $this->employee = Staff::findByID($employeeId);
@@ -66,6 +68,10 @@ class StaffUpdatePage extends CRUDPage
                 array_push($this->mustacheArray, $this->allRooms[$i]);
             }
         }
+        $admin = "";
+        if($this->employee->admin == 1){
+            $admin = "checked";
+        }
         return MustacheProvider::get()->render(
             'employeeForm',
             [
@@ -73,7 +79,9 @@ class StaffUpdatePage extends CRUDPage
                 'homeRoom' => $this->room,
                 'employee' => $this->employee,
                 'errors' => $this->errors,
-                'rooms' => $this->mustacheArray
+                'rooms' => $this->mustacheArray,
+                'admin' => $admin,
+                'adminView' => $_SESSION['admin']
             ]
         );
     }
