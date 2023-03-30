@@ -16,6 +16,13 @@ class RoomDeletePage extends CRUDPage
         if($_SESSION['admin'] != 1)
             throw new AccessDeniedException();
         //když poslal data
+        $employees = null;
+        $stmt = PDOProvider::get()->prepare("SELECT employee_id FROM ".Staff::DB_TABLE." WHERE `room` = :roomId");
+        $stmt->execute(["roomId" => $roomId]);
+        $employees = $stmt->fetch();
+        if($employees != null){
+            $this->redirect(self::ACTION_DELETE, 0);
+        }
         $success = Room::deleteByID($roomId);
 
         //přesměruj
