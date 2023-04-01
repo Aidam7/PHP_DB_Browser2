@@ -1,5 +1,7 @@
 # PHP_DB_Browser2
-Third year PHP project
+Third year PHP project for my PHP classes. Essentially an upgrade of the [previous](https://github.com/Aidam7/PHP_DB_Browser) Database browser.
+
+This repo will get archived at the end of this year.
 ___
 ## Setup
 Create a file called `config_local.json`, in `[root]/config/` and paste the following code into it:
