@@ -2,7 +2,7 @@
 Third year PHP project
 ___
 ## Setup
-Create a file called `config_local.json`, paste the following code into it:
+Create a file called `config_local.json`, in `[root]/config/` and paste the following code into it:
 ````
 {
   "db": {
@@ -11,6 +11,8 @@ Create a file called `config_local.json`, paste the following code into it:
   }
 }
 ````
+Install [composer](https://getcomposer.org/)
+
 After that run the command `composer install` from the terminal.
 
 You may run `composer update` to check for any updates to the packages.
